@@ -7,7 +7,7 @@
     "url": "https://leeloo.ai"
   },
   "homepage": "https://leeloo.ai",
-  "repository": "https://github.com/x93cx/leeloo-agent-plugin.git",
+  "repository": "https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git",
   "keywords": ["leeloo", "funnel", "tunnel", "crm", "chatbot", "claude-code", "mcp"],
   "mcpServers": {
     "leeloo": {
