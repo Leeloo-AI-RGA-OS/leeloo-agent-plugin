@@ -12,8 +12,8 @@
   "mcpServers": {
     "leeloo": {
       "type": "http",
-      "url": "https://app.leeloo.ai/mcp",
-      "oauth_resource": "https://app.leeloo.ai/mcp",
+      "url": "https://dev.leeloo.ai/mcp",
+      "oauth_resource": "https://dev.leeloo.ai/mcp",
       "headers": {
         "x-leeloo-mcp-client": "claude_code"
       }
