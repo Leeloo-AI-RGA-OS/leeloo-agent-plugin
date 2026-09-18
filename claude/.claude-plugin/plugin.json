@@ -1,6 +1,6 @@
 {
   "name": "leeloo",
-  "version": "0.1.2-stage",
+  "version": "0.2.0-dev",
   "description": "Leeloo.AI plugin for building funnels, lead-gen tools, offers and analytics from Claude Code.",
   "author": {
     "name": "Leeloo.AI",
@@ -12,8 +12,8 @@
   "mcpServers": {
     "leeloo": {
       "type": "http",
-      "url": "https://stage.leeloo.ai/mcp",
-      "oauth_resource": "https://stage.leeloo.ai/mcp",
+      "url": "https://dev.leeloo.ai/mcp",
+      "oauth_resource": "https://dev.leeloo.ai/mcp",
       "headers": {
         "x-leeloo-mcp-client": "claude_code"
       }
