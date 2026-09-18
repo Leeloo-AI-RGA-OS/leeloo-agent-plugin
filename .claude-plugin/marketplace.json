@@ -1,0 +1,24 @@
+{
+  "name": "leeloo-ai",
+  "owner": {
+    "name": "Leeloo.AI",
+    "url": "https://leeloo.ai"
+  },
+  "metadata": {
+    "description": "Leeloo.AI plugins for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "leeloo",
+      "source": "./claude",
+      "description": "Build and debug Leeloo.AI funnels, lead-gen tools, offers, sales plans and broadcasts from Claude Code.",
+      "category": "productivity",
+      "homepage": "https://leeloo.ai",
+      "author": {
+        "name": "Leeloo.AI",
+        "url": "https://leeloo.ai"
+      },
+      "keywords": ["leeloo", "funnel", "tunnel", "crm", "chatbot", "lead-generation", "mcp"]
+    }
+  ]
+}
