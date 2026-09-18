@@ -1,24 +1,38 @@
-# Install the Leeloo plugin
+# Install & connect Leeloo
 
-Three steps — nothing else.
+A Claude Code agent executes this page top to bottom. Do exactly these steps, nothing else.
 
 ## 1. Install the plugin
+
+If a `claude` binary is on PATH, run (wait for each to finish):
 
 ```
 claude plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git#main
 claude plugin install leeloo@leeloo-ai
 ```
 
-## 2. Open a new session
+If `claude` is NOT on PATH (normal in the desktop Code tab), do not try to install it.
+Tell the user, in their language: open **Add → Upload plugin** and pick the Leeloo plugin
+`.zip`, then continue at step 2.
 
-The plugin loads at session start.
+## 2. Try to connect Leeloo right away
 
-## 3. Connect
+Look at the session MCP server `plugin:leeloo:leeloo`:
 
-In the new session run:
+- status `connected` → done. Tell the user Leeloo is ready.
+- status `needs_auth` → go to step 3.
+- server not listed → the plugin registers only at session start; go to step 4.
 
-```
-/mcp
-```
+## 3. Run the connect flow yourself
 
-then select Leeloo -> Authenticate -> sign in and click Allow.
+Run `/mcp`, choose **Leeloo → Authenticate**. The consent page "Authorize · Leeloo.AI"
+opens; the user signs in and clicks **Allow access**.
+
+Only the user can finish sign-in — you cannot click Allow for them. After they do,
+confirm the server shows `connected`.
+
+## 4. If it still will not connect
+
+Tell the user: open a **new session (new tab)**, then run `/mcp` → **Leeloo** →
+**Authenticate**. The plugin's server loads at session start, so a fresh session is the
+reliable fallback.
