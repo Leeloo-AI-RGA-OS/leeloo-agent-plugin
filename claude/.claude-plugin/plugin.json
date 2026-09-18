@@ -1,6 +1,6 @@
 {
   "name": "leeloo",
-  "version": "0.3.0-dev",
+  "version": "1.0.0",
   "description": "Leeloo.AI plugin for building funnels, lead-gen tools, offers and analytics from Claude Code.",
   "author": {
     "name": "Leeloo.AI",
@@ -8,12 +8,20 @@
   },
   "homepage": "https://leeloo.ai",
   "repository": "https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git",
-  "keywords": ["leeloo", "funnel", "tunnel", "crm", "chatbot", "claude-code", "mcp"],
+  "keywords": [
+    "leeloo",
+    "funnel",
+    "tunnel",
+    "crm",
+    "chatbot",
+    "claude-code",
+    "mcp"
+  ],
   "mcpServers": {
     "leeloo": {
       "type": "http",
-      "url": "https://dev.leeloo.ai/mcp",
-      "oauth_resource": "https://dev.leeloo.ai/mcp",
+      "url": "https://app.leeloo.ai/mcp",
+      "oauth_resource": "https://app.leeloo.ai/mcp",
       "headers": {
         "x-leeloo-mcp-client": "claude_code"
       }
