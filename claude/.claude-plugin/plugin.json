@@ -1,6 +1,6 @@
 {
   "name": "leeloo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Leeloo.AI plugin for building funnels, lead-gen tools, offers and analytics from Claude Code.",
   "author": {
     "name": "Leeloo.AI",
@@ -27,5 +27,6 @@
       }
     }
   },
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "license": "LicenseRef-Proprietary"
 }

@@ -18,7 +18,16 @@
         "name": "Leeloo.AI",
         "url": "https://leeloo.ai"
       },
-      "keywords": ["leeloo", "funnel", "tunnel", "crm", "chatbot", "lead-generation", "mcp"]
+      "keywords": [
+        "leeloo",
+        "funnel",
+        "tunnel",
+        "crm",
+        "chatbot",
+        "lead-generation",
+        "mcp"
+      ],
+      "license": "LicenseRef-Proprietary"
     }
   ]
 }

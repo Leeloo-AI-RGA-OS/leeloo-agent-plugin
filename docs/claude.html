@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index,follow">
+<title>Leeloo for Claude Code</title>
+<meta name="description" content="Install and connect the Leeloo.AI plugin in Claude Code with one prompt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F2EC; --ink:#171512; --ink-2:#5B554C; --line:rgba(23,21,18,.12);
+  --card:#FFFFFF; --claude:#C25E3C; --leeloo:#0062C7;
+  --f-disp:"Unbounded",system-ui,sans-serif; --f-body:"Manrope",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --sh:0 1px 2px rgba(23,21,18,.05),0 18px 40px -20px rgba(23,21,18,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:0 16px}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:56px 0 72px;flex:1;display:flex;flex-direction:column;align-items:center;text-align:center}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-disp);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--leeloo);margin-bottom:40px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--claude)}
+h1{font-family:var(--f-disp);font-weight:800;font-size:clamp(30px,7vw,52px);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
+h1 .g{color:var(--leeloo)}
+.sub{margin:18px auto 0;max-width:46ch;color:var(--ink-2);font-size:clamp(16px,2.4vw,19px)}
+.card{margin-top:40px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--sh);padding:26px 22px}
+.label{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
+.prompt{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 14px;text-align:left}
+.prompt code{font-family:var(--f-mono);font-size:13.5px;color:var(--ink);white-space:pre-wrap;word-break:break-word;flex:1}
+.copy{flex:none;border:0;background:var(--leeloo);color:#fff;font-family:var(--f-body);font-weight:700;font-size:13px;padding:10px 16px;border-radius:10px;cursor:pointer;transition:opacity .15s,transform .1s}
+.copy:hover{opacity:.92}.copy:active{transform:translateY(1px)}
+.copy.done{background:#0F7A52}
+.steps{margin-top:34px;width:100%;display:grid;gap:14px;text-align:left}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.step .n{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--leeloo);color:#fff;font-family:var(--f-mono);font-weight:600;font-size:13px}
+.step h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.step p{font-size:14px;color:var(--ink-2)}
+.step code{font-family:var(--f-mono);font-size:12.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.note{margin-top:28px;font-size:13px;color:var(--ink-2);max-width:52ch}
+.note b{color:var(--ink)}
+footer{width:100%;max-width:720px;padding:20px 0 40px;color:var(--ink-2);font-size:12.5px;text-align:center;border-top:1px solid var(--line)}
+a{color:var(--leeloo)}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--card:#1E1B17}
+}
+:root[data-theme="dark"]{--paper:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--card:#1E1B17}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="dot"></span>Leeloo.AI &nbsp;×&nbsp; Claude Code</div>
+
+  <h1>Your funnels, built by <span class="g">Claude</span></h1>
+  <p class="sub">Install the Leeloo plugin and connect it to Claude Code with a single prompt. Then build tunnels, lead-gen tools, offers and analytics — from chat.</p>
+
+  <div class="card">
+    <div class="label">Paste this into any session in your Claude Code desktop app</div>
+    <div class="prompt">
+      <code id="p">/goal Read leeloo.ai/claude to install and use the Leeloo plugin</code>
+      <button class="copy" id="c" type="button">Copy</button>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><h3>Paste the prompt</h3><p>Claude reads this page and installs the <code>leeloo@leeloo-ai</code> plugin for you.</p></div></div>
+    <div class="step"><span class="n">2</span><div><h3>Sign in to Leeloo</h3><p>An authorization page opens — sign in and click <b>Allow access</b>.</p></div></div>
+    <div class="step"><span class="n">3</span><div><h3>Open a new session</h3><p>Leeloo's tools load at session start. That's it — start building.</p></div></div>
+  </div>
+
+  <p class="note"><b>Needs the Claude Code CLI</b> (<code>claude</code>, v2.1.210+). No CLI? In the app: <code>/plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin</code>, then <code>/plugin install leeloo@leeloo-ai</code>, then a new session and <code>/mcp reconnect leeloo</code>.</p>
+</div>
+<footer>Leeloo.AI · <a href="https://leeloo.ai">leeloo.ai</a> · Plugin source: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin">GitHub</a></footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('c'), code=document.getElementById('p');
+  btn.addEventListener('click',function(){
+    var t=code.textContent.trim();
+    navigator.clipboard.writeText(t).then(function(){
+      btn.textContent='Copied';btn.classList.add('done');
+      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1800);
+    }).catch(function(){
+      var r=document.createRange();r.selectNodeContents(code);
+      var s=getSelection();s.removeAllRanges();s.addRange(r);
+    });
+  });
+})();
+</script>
+</body>
+</html>
