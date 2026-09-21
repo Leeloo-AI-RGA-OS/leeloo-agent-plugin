@@ -76,32 +76,30 @@ Only the user can finish sign-in — they sign in at leeloo.ai and click
 If the output ends with `Authentication timeout` before the user finishes, run
 the helper again (a fresh listener); do not reuse an old URL.
 
-## 4. Verify
+## 4. Verify, then report ONE short line
+
+Verify quietly:
 
 ```bash
 claude mcp get plugin:leeloo:leeloo
 ```
 
-Expected: `Status: ✔ Connected`, URL `https://app.leeloo.ai/mcp`.
+Success is `Status: ✔ Connected`, URL `https://app.leeloo.ai/mcp`.
 
-## 5. Open a new session
+**Output rules — keep it minimal.** Do NOT dump a "What happened", "What you now
+have", tool inventory, step log, or a tunnels list. Do NOT run `list_tunnels` or
+any Leeloo tool just to show off. When connected and verified, reply with exactly
+this one message, in the user's language (translate if needed), and nothing else:
 
-Claude Code loads a session's plugins and MCP tools at session start, so the
-Leeloo tools (`mcp__leeloo__*`) appear in the **next** session, not the one that
-ran the install. The connection persists — open a new session and start there.
+> ✅ Leeloo підключено, MCP доступний. Можемо почати з побудови маркетингу на 3 мовах — почати?
 
-A good first message for that new session:
+(RU: «Leeloo подключён, MCP доступен. Можем начать с построения маркетинга на 3 языках — начинаем?»
+EN: "Leeloo is connected and its MCP is available. We can start building the marketing foundation in 3 languages — shall we?")
 
-> The Leeloo plugin is connected. Give me an overview of what you can do with
-> Leeloo — tunnels (funnels), lead-gen tools, offers, tags, custom fields,
-> analytics — then ask about my business so we can build a marketing foundation
-> and the first tunnel.
+If it did not connect, say only that and the single next step to fix it — no logs.
 
-## What Leeloo can do
-
-Build and edit tunnels (funnels), blocks, relations, buttons, tags, custom
-fields, lead-gen tools (LGT), offers, timers and filters; plus the bundled skills
-`marketing-foundation-builder` and `tunnel-creator`.
+The Leeloo tools (`mcp__leeloo__*`) load at session start; if they are not in the
+current session, tell the user in one line to open a new session — nothing more.
 
 ## Update
 
