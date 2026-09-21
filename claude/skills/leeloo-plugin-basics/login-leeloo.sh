@@ -1,85 +1,64 @@
 #!/bin/sh
-# Start `claude mcp login` for the plugin-managed Leeloo MCP server and open the
-# authorization page in the user's default browser automatically.
-#
-# `claude mcp login` needs a TTY, which an agent's non-interactive shell does
-# not have. Each branch below allocates one a different way and backgrounds the
-# process, writing everything to $LOG. A watcher then reads the authorization
-# URL from $LOG and opens it in the default browser, so the user never has to
-# copy or run anything. The caller can still poll $LOG for the authenticated
-# line.
+# Start `claude mcp login` for the Leeloo MCP server and open the authorization
+# page in the user's default browser automatically. The user only signs in and
+# clicks Allow. Run this backgrounded, e.g.:
+#     sh login-leeloo.sh > /tmp/leeloo-login.log 2>&1 &
+# then poll the log for: Authenticated with "plugin:leeloo:leeloo".
 
 SERVER="plugin:leeloo:leeloo"
 LOG="${TMPDIR:-/tmp}/leeloo-login.log"
 : > "$LOG"
 
-# --- resolve the claude executable by full path ------------------------------
-# A spawned Windows console (Start-Process cmd) does NOT reliably inherit the
-# npm global bin on PATH, so `claude` alone fails there silently. Resolve the
-# absolute path here (this shell found `claude`, since install already ran) and
-# pass it explicitly to every branch.
-CLAUDE_BIN="${CLAUDE_BIN:-}"
-if [ -z "$CLAUDE_BIN" ]; then
-  CLAUDE_BIN="$(command -v claude 2>/dev/null)"
-fi
-# On Windows prefer the .cmd shim for cmd.exe.
-CLAUDE_WIN=""
-if command -v cygpath >/dev/null 2>&1; then
-  for cand in "$CLAUDE_BIN.cmd" "${CLAUDE_BIN%.*}.cmd" "$CLAUDE_BIN"; do
-    if [ -n "$cand" ] && [ -f "$cand" ]; then CLAUDE_WIN=$(cygpath -w "$cand" 2>/dev/null); break; fi
-  done
-fi
+# Resolve the claude executable by absolute path. A spawned Windows console does
+# NOT reliably inherit npm's global bin on PATH, so `claude` alone fails there.
+CLAUDE_BIN="${CLAUDE_BIN:-$(command -v claude 2>/dev/null)}"
 [ -z "$CLAUDE_BIN" ] && CLAUDE_BIN="claude"
 
-# --- background watcher: open the auth URL in the default browser, once -------
-(
-  i=0
-  while [ $i -lt 90 ]; do
-    URL=$(grep -oE 'https://[^ ]*/authorize\?[^ ]*' "$LOG" 2>/dev/null | head -1)
-    if [ -n "$URL" ]; then
-      if command -v powershell.exe >/dev/null 2>&1; then
-        powershell.exe -NoProfile -Command "Start-Process '$URL'" >/dev/null 2>&1
-      elif [ "$(uname -s)" = "Darwin" ]; then
-        open "$URL" >/dev/null 2>&1
-      elif command -v xdg-open >/dev/null 2>&1; then
-        xdg-open "$URL" >/dev/null 2>&1
-      fi
-      echo "opened browser: $URL"
-      break
-    fi
-    i=$((i+1)); sleep 1
-  done
-) &
+open_url() {
+  _u="$1"
+  if command -v powershell.exe >/dev/null 2>&1; then
+    powershell.exe -NoProfile -Command "Start-Process '$_u'" >/dev/null 2>&1
+  elif [ "$(uname -s)" = "Darwin" ]; then open "$_u" >/dev/null 2>&1
+  elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$_u" >/dev/null 2>&1
+  fi
+}
 
-# --- start claude mcp login on a PTY, backgrounded ---------------------------
-# POSIX: Python's pty module. Not available on Windows (no termios).
-if python3 -c 'import pty' 2>/dev/null; then
+# --- start `claude mcp login` on a console/PTY, backgrounded ------------------
+if python3 -c 'import pty' 2>/dev/null; then                      # macOS/Linux
   python3 -c 'import pty,sys; pty.spawn(sys.argv[1:])' "$CLAUDE_BIN" mcp login "$SERVER" > "$LOG" 2>&1 &
-  echo "started: python3 pty -> $LOG"
-
-# Linux: util-linux script(1).
-elif script --version 2>/dev/null | grep -q util-linux; then
-  script -qc "\"$CLAUDE_BIN\" mcp login $SERVER" "$LOG" &
-  echo "started: util-linux script -> $LOG"
-
-# macOS: BSD script(1) takes the logfile first.
+  echo "started: python3 pty"
 elif [ "$(uname -s)" = "Darwin" ]; then
   script -q "$LOG" "$CLAUDE_BIN" mcp login "$SERVER" &
-  echo "started: BSD script -> $LOG"
-
-# Windows: spawn a throwaway console via PowerShell and redirect into $LOG.
-# Use the full path to claude.cmd so it does not depend on the console's PATH.
-elif command -v powershell.exe >/dev/null 2>&1; then
-  WINLOG=$(cygpath -w "$LOG" 2>/dev/null || echo "$LOG")
-  RUN="${CLAUDE_WIN:-claude}"
-  powershell.exe -NoProfile -Command \
-    "Start-Process cmd -ArgumentList '/c','\"$RUN\" mcp login $SERVER > \"$WINLOG\" 2>&1'" >/dev/null 2>&1 &
-  echo "started: windows console ($RUN) -> $LOG"
-
+  echo "started: BSD script"
+elif command -v script >/dev/null 2>&1 && script --version 2>/dev/null | grep -q util-linux; then
+  script -qc "\"$CLAUDE_BIN\" mcp login $SERVER" "$LOG" &
+  echo "started: util-linux script"
+elif command -v powershell.exe >/dev/null 2>&1; then              # Windows
+  # Write a .cmd that runs login with the full path and redirects to the log,
+  # then launch it hidden. A batch file handles its own quoting/redirection,
+  # which Start-Process -ArgumentList mangles.
+  RUN_WIN=$(cygpath -w "$CLAUDE_BIN.cmd" 2>/dev/null); [ -f "$CLAUDE_BIN.cmd" ] || RUN_WIN=$(cygpath -w "$CLAUDE_BIN" 2>/dev/null)
+  LOG_WIN=$(cygpath -w "$LOG" 2>/dev/null || echo "$LOG")
+  BAT="${TMPDIR:-/tmp}/leeloo-login-run.cmd"
+  printf '@echo off\r\n"%s" mcp login %s > "%s" 2>&1\r\n' "$RUN_WIN" "$SERVER" "$LOG_WIN" > "$BAT"
+  BAT_WIN=$(cygpath -w "$BAT" 2>/dev/null || echo "$BAT")
+  powershell.exe -NoProfile -Command "Start-Process -FilePath '$BAT_WIN' -WindowStyle Hidden" >/dev/null 2>&1
+  echo "started: windows batch ($RUN_WIN)"
 else
-  echo "No PTY strategy available. Ask the user to run this in their own terminal:"
-  echo "    claude mcp login $SERVER"
+  echo "No console strategy available. Run in a terminal: claude mcp login $SERVER"
   exit 1
 fi
 
 echo "A browser window will open for Leeloo sign-in. Sign in and click Allow access."
+
+# --- foreground loop: open the browser when the URL appears, then wait --------
+opened=0
+i=0
+while [ $i -lt 180 ]; do
+  if [ $opened -eq 0 ]; then
+    URL=$(grep -oE 'https://[^ ]*/authorize\?[^ ]*' "$LOG" 2>/dev/null | head -1)
+    if [ -n "$URL" ]; then open_url "$URL"; echo "opened browser: $URL"; opened=1; fi
+  fi
+  if grep -qiE 'Authenticated with|Authentication timeout|error' "$LOG" 2>/dev/null; then break; fi
+  i=$((i+1)); sleep 1
+done
