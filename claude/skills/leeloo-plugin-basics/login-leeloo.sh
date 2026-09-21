@@ -13,10 +13,28 @@ SERVER="plugin:leeloo:leeloo"
 LOG="${TMPDIR:-/tmp}/leeloo-login.log"
 : > "$LOG"
 
+# --- resolve the claude executable by full path ------------------------------
+# A spawned Windows console (Start-Process cmd) does NOT reliably inherit the
+# npm global bin on PATH, so `claude` alone fails there silently. Resolve the
+# absolute path here (this shell found `claude`, since install already ran) and
+# pass it explicitly to every branch.
+CLAUDE_BIN="${CLAUDE_BIN:-}"
+if [ -z "$CLAUDE_BIN" ]; then
+  CLAUDE_BIN="$(command -v claude 2>/dev/null)"
+fi
+# On Windows prefer the .cmd shim for cmd.exe.
+CLAUDE_WIN=""
+if command -v cygpath >/dev/null 2>&1; then
+  for cand in "$CLAUDE_BIN.cmd" "${CLAUDE_BIN%.*}.cmd" "$CLAUDE_BIN"; do
+    if [ -n "$cand" ] && [ -f "$cand" ]; then CLAUDE_WIN=$(cygpath -w "$cand" 2>/dev/null); break; fi
+  done
+fi
+[ -z "$CLAUDE_BIN" ] && CLAUDE_BIN="claude"
+
 # --- background watcher: open the auth URL in the default browser, once -------
 (
   i=0
-  while [ $i -lt 60 ]; do
+  while [ $i -lt 90 ]; do
     URL=$(grep -oE 'https://[^ ]*/authorize\?[^ ]*' "$LOG" 2>/dev/null | head -1)
     if [ -n "$URL" ]; then
       if command -v powershell.exe >/dev/null 2>&1; then
@@ -36,25 +54,27 @@ LOG="${TMPDIR:-/tmp}/leeloo-login.log"
 # --- start claude mcp login on a PTY, backgrounded ---------------------------
 # POSIX: Python's pty module. Not available on Windows (no termios).
 if python3 -c 'import pty' 2>/dev/null; then
-  python3 -c 'import pty,sys; pty.spawn(sys.argv[1:])' claude mcp login "$SERVER" > "$LOG" 2>&1 &
+  python3 -c 'import pty,sys; pty.spawn(sys.argv[1:])' "$CLAUDE_BIN" mcp login "$SERVER" > "$LOG" 2>&1 &
   echo "started: python3 pty -> $LOG"
 
 # Linux: util-linux script(1).
 elif script --version 2>/dev/null | grep -q util-linux; then
-  script -qc "claude mcp login $SERVER" "$LOG" &
+  script -qc "\"$CLAUDE_BIN\" mcp login $SERVER" "$LOG" &
   echo "started: util-linux script -> $LOG"
 
 # macOS: BSD script(1) takes the logfile first.
 elif [ "$(uname -s)" = "Darwin" ]; then
-  script -q "$LOG" claude mcp login "$SERVER" &
+  script -q "$LOG" "$CLAUDE_BIN" mcp login "$SERVER" &
   echo "started: BSD script -> $LOG"
 
 # Windows: spawn a throwaway console via PowerShell and redirect into $LOG.
+# Use the full path to claude.cmd so it does not depend on the console's PATH.
 elif command -v powershell.exe >/dev/null 2>&1; then
   WINLOG=$(cygpath -w "$LOG" 2>/dev/null || echo "$LOG")
+  RUN="${CLAUDE_WIN:-claude}"
   powershell.exe -NoProfile -Command \
-    "Start-Process cmd -ArgumentList '/c','claude mcp login $SERVER > \"$WINLOG\" 2>&1'" >/dev/null 2>&1 &
-  echo "started: windows console -> $LOG (console window may look blank; output is redirected)"
+    "Start-Process cmd -ArgumentList '/c','\"$RUN\" mcp login $SERVER > \"$WINLOG\" 2>&1'" >/dev/null 2>&1 &
+  echo "started: windows console ($RUN) -> $LOG"
 
 else
   echo "No PTY strategy available. Ask the user to run this in their own terminal:"
