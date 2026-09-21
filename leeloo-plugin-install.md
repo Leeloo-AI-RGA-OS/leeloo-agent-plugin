@@ -66,9 +66,17 @@ LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-pl
 sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &
 ```
 
-When an authorization URL appears in the log, open it in the user's default
-browser automatically (do not ask the user to run a command) — use the right one
-for the OS:
+As soon as an authorization URL appears in the log, **open it yourself so the
+sign-in window appears automatically. Never print the URL and ask the user to
+copy or run anything** — opening it is your job, clicking Allow is theirs.
+
+Open it one of these ways (in order of preference):
+
+1. If an in-app Browser pane is available (desktop app: the `Claude_Browser`
+   tools, e.g. `navigate`/`preview_start`), open the URL there so the user signs
+   in right in the app. The localhost callback still completes because it is the
+   same machine.
+2. Otherwise open the OS default browser directly:
 
 ```bash
 # macOS
