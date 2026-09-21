@@ -89,12 +89,11 @@ Success is `Status: ✔ Connected`, URL `https://app.leeloo.ai/mcp`.
 **Output rules — keep it minimal.** Do NOT dump a "What happened", "What you now
 have", tool inventory, step log, or a tunnels list. Do NOT run `list_tunnels` or
 any Leeloo tool just to show off. When connected and verified, reply with exactly
-this one message, in the user's language (translate if needed), and nothing else:
+these three lines (UK, RU, EN) and nothing else:
 
-> ✅ Leeloo підключено, MCP доступний. Можемо почати з побудови маркетингу на 3 мовах — почати?
-
-(RU: «Leeloo подключён, MCP доступен. Можем начать с построения маркетинга на 3 языках — начинаем?»
-EN: "Leeloo is connected and its MCP is available. We can start building the marketing foundation in 3 languages — shall we?")
+> ✅ Leeloo підключено, MCP доступний. Можемо почати з побудови маркетингу — почати?
+> ✅ Leeloo подключён, MCP доступен. Можем начать с построения маркетинга — начинаем?
+> ✅ Leeloo is connected, MCP is available. We can start building the marketing — shall we begin?
 
 If it did not connect, say only that and the single next step to fix it — no logs.
 
