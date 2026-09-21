@@ -6,7 +6,10 @@
 # then poll the log for: Authenticated with "plugin:leeloo:leeloo".
 
 SERVER="plugin:leeloo:leeloo"
-LOG="${TMPDIR:-/tmp}/leeloo-login.log"
+# claude mcp login output goes to its OWN file. It must NOT be the file the
+# caller redirects this helper's stdout to (a shared file makes the batch's
+# `>` truncate clobber the URL). The caller polls this helper's stdout instead.
+LOG="${TMPDIR:-/tmp}/leeloo-mcp-login.log"
 : > "$LOG"
 
 # Resolve the claude executable by absolute path. A spawned Windows console does
@@ -59,6 +62,10 @@ while [ $i -lt 180 ]; do
     URL=$(grep -oE 'https://[^ ]*/authorize\?[^ ]*' "$LOG" 2>/dev/null | head -1)
     if [ -n "$URL" ]; then open_url "$URL"; echo "opened browser: $URL"; opened=1; fi
   fi
-  if grep -qiE 'Authenticated with|Authentication timeout|error' "$LOG" 2>/dev/null; then break; fi
+  DONE=$(grep -iE 'Authenticated with|Authentication timeout' "$LOG" 2>/dev/null | head -1)
+  if [ -n "$DONE" ]; then echo "$DONE"; break; fi
   i=$((i+1)); sleep 1
 done
+# Mirror the login log to stdout so a caller that only reads this helper's
+# output still gets the full picture.
+echo "--- login log ---"; cat "$LOG" 2>/dev/null

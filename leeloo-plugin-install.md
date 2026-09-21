@@ -59,37 +59,22 @@ callback; the user signs in at leeloo.ai and clicks **Allow access**.
 
 `claude mcp login` needs a terminal. When run through an agent's non-interactive
 shell it may report "stdin isn't a terminal" — the plugin ships a cross-platform
-helper that allocates a PTY and runs it in the background:
+helper that starts login on a console AND **opens the sign-in page in the user's
+default browser by itself**. Run it in the background and capture its output:
 
 ```bash
 LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-plugin-basics/login-leeloo.sh 2>/dev/null | sort | tail -1)"
-sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &
+sh "$LOGIN" > /tmp/leeloo-helper.out 2>&1 &
 ```
 
-As soon as an authorization URL appears in the log, **open it in the user's
-external default browser automatically. Never print the URL and ask the user to
-copy or run anything** — opening it is your job, clicking Allow is theirs. Use the
-OS default-browser command (do not use the in-app Browser pane — a hidden pane
-leaves the user seeing nothing):
+The helper opens the browser automatically — do not print a URL or ask the user
+to copy/run anything. Poll `/tmp/leeloo-helper.out` and wait for the line
+`Authenticated with "plugin:leeloo:leeloo"` (that line, not `Connected` alone).
+Only the user can finish sign-in — they sign in at leeloo.ai and click
+**Allow access**; you cannot click it for them.
 
-```bash
-# macOS
-open "<AUTH_URL>"
-# Linux
-xdg-open "<AUTH_URL>"
-# Windows
-powershell.exe -NoProfile -Command "Start-Process '<AUTH_URL>'"
-```
-
-The localhost callback completes in whichever browser the user signs in with,
-since it is the same machine. If the login log ends with `Authentication timeout`
-before the user finishes, the listener is dead — start a fresh login helper and
-open the new URL; do not reuse the old one.
-
-Then wait for the line `Authenticated with "plugin:leeloo:leeloo"` in the log
-(that line, not `Connected` alone). Only the user can finish sign-in in the
-browser — they sign in at leeloo.ai and click **Allow access**; you cannot click
-it for them.
+If the output ends with `Authentication timeout` before the user finishes, run
+the helper again (a fresh listener); do not reuse an old URL.
 
 ## 4. Verify
 

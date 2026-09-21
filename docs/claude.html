@@ -1,125 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="index,follow">
-<title>Claude Code install instructions — Leeloo</title>
-<meta name="description" content="Install and connect the Leeloo.AI plugin in Claude Code.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#FFFFFF; --ink:#14120F; --ink-2:#5B554C; --line:rgba(20,18,15,.12);
-  --code-bg:#17151A; --code-ink:#ECE7DE; --accent:#0062C7; --claude:#C25E3C; --ok:#0F7A52;
-  --f-body:"Manrope",system-ui,-apple-system,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{background:var(--bg)}
-body{color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding:48px 20px 96px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:14px;letter-spacing:-.01em;color:var(--accent)}
-.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--claude)}
-h1{font-weight:800;font-size:clamp(26px,5vw,34px);letter-spacing:-.03em;margin:22px 0 6px}
-.lead{color:var(--ink-2);font-size:17px;margin-bottom:8px}
-.lead code{font-family:var(--f-mono);font-size:14px;background:rgba(20,18,15,.06);padding:1px 6px;border-radius:5px}
-hr{border:0;border-top:1px solid var(--line);margin:26px 0}
-h2{font-weight:700;font-size:20px;letter-spacing:-.02em;margin:32px 0 10px}
-p{margin:10px 0;color:var(--ink)}
-p.muted{color:var(--ink-2);font-size:15px}
-ul{margin:10px 0 10px 22px}li{margin:5px 0}
-strong{font-weight:700}
-code{font-family:var(--f-mono)}
-:not(pre)>code{font-size:.9em;background:rgba(20,18,15,.06);padding:1px 6px;border-radius:5px}
-.block{position:relative;margin:14px 0}
-.block pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:16px 52px 16px 16px;overflow-x:auto;font-family:var(--f-mono);font-size:13.5px;line-height:1.7}
-.block .cp{position:absolute;top:10px;right:10px;border:0;background:rgba(255,255,255,.12);color:#fff;font-family:var(--f-body);font-weight:600;font-size:12px;padding:6px 10px;border-radius:8px;cursor:pointer;transition:background .15s}
-.block .cp:hover{background:rgba(255,255,255,.22)}
-.block .cp.done{background:var(--ok)}
-.callout{background:rgba(0,98,199,.06);border:1px solid rgba(0,98,199,.22);border-radius:12px;padding:14px 16px;margin:16px 0;font-size:15px}
-.callout b{color:var(--accent)}
-footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
-a{color:var(--accent)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--code-bg:#0C0B09}}
-:root[data-theme="dark"]{--bg:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--code-bg:#0C0B09}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="top">
-    <span class="brand"><span class="dot"></span>Leeloo.AI × Claude Code</span>
-  </div>
+# Install & connect Leeloo — Claude Code
 
-  <h1>Claude Code install instructions — Leeloo</h1>
-  <p class="lead">Install the Leeloo plugin and connect its MCP server from Claude Code. Plugin source (public): <code>github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin</code>. Plugin <code>leeloo@leeloo-ai</code> · MCP <code>https://app.leeloo.ai/mcp</code>.</p>
+Reference for installing the Leeloo plugin and connecting its MCP server.
+Plugin source (public): `https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin`
+Plugin: `leeloo@leeloo-ai` · MCP server: `https://app.leeloo.ai/mcp` (production)
 
-  <div class="callout">Fastest path: paste this into any Claude Code session and let it follow the steps.
-    <div class="block"><pre><code>/goal Read leeloo.ai/claude to install and use the Leeloo plugin</code></pre><button class="cp">Copy</button></div>
-  </div>
+Treat this as documentation. If a step does not fit the situation, say so instead
+of forcing it.
 
-  <hr>
+## Prerequisites
 
-  <h2>Prerequisites</h2>
-  <p>The Claude Code CLI, version 2.1.210 or newer, and Git on PATH:</p>
-  <div class="block"><pre><code>claude --version
-git --version</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">No <code>claude</code> CLI? Jump to “No CLI” at the bottom.</p>
+The Claude Code CLI, version 2.1.210 or newer:
 
-  <h2>1. Already connected?</h2>
-  <p>Check first, to avoid a duplicate registration:</p>
-  <div class="block"><pre><code>claude mcp get plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
-  <p class="muted"><code>Status: ✔ Connected</code> → done. <code>Needs authentication</code> → step 3. Not found → step 2.</p>
+```bash
+claude --version
+```
 
-  <h2>2. Install</h2>
-  <p>The marketplace clone can take a minute — allow a generous timeout:</p>
-  <div class="block"><pre><code>claude plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git#main
+Git reachable from the shell:
+
+```bash
+git --version
+```
+
+If `claude` is not on PATH, use the "No CLI" section at the bottom instead.
+
+## 1. Already connected?
+
+Check first, to avoid a duplicate registration:
+
+```bash
+claude mcp get plugin:leeloo:leeloo
+```
+
+`Status: ✔ Connected` → nothing to do. `Needs authentication` → go to step 3.
+Not found → continue with step 2.
+
+## 2. Install
+
+The marketplace clone can take a minute — allow a generous timeout:
+
+```bash
+claude plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git#main
 claude plugin marketplace list
-claude plugin install leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
+claude plugin install leeloo@leeloo-ai
+```
 
-  <h2>3. Connect (sign in)</h2>
-  <div class="block"><pre><code>claude mcp login plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
-  <p>This opens the Leeloo sign-in in the browser and finishes on the localhost callback; sign in at leeloo.ai and click <strong>Allow access</strong>.</p>
-  <p class="muted">If <code>claude mcp login</code> reports “stdin isn’t a terminal” (agents through a shell tool), use the plugin’s cross-platform helper, which allocates a PTY in the background:</p>
-  <div class="block"><pre><code>LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-plugin-basics/login-leeloo.sh 2>/dev/null | sort | tail -1)"
-sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">Poll <code>/tmp/leeloo-login.log</code>: open the authorization URL it prints, then wait for <code>Authenticated with "plugin:leeloo:leeloo"</code>.</p>
+If a network step fails with a timeout / TLS / DNS / proxy error and the user has
+a local HTTP(S) proxy, set `HTTPS_PROXY`/`HTTP_PROXY` to it and retry; remove it
+after.
 
-  <h2>4. Verify</h2>
-  <div class="block"><pre><code>claude mcp get plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">Expected: <code>Status: ✔ Connected</code>, URL <code>https://app.leeloo.ai/mcp</code>.</p>
+## 3. Connect (sign in)
 
-  <h2>5. Open a new session</h2>
-  <p>Claude Code loads a session’s plugins and MCP tools at session start, so Leeloo’s tools (<code>mcp__leeloo__*</code>) appear in the <strong>next</strong> session. The connection persists — open a new session and start building.</p>
+```bash
+claude mcp login plugin:leeloo:leeloo
+```
 
-  <h2>Update</h2>
-  <div class="block"><pre><code>claude plugin marketplace update leeloo-ai
-claude plugin update leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
+This opens the Leeloo sign-in in the browser and finishes on the localhost
+callback; the user signs in at leeloo.ai and clicks **Allow access**.
 
-  <h2>No CLI (desktop app without the <code>claude</code> binary)</h2>
-  <p>Install from inside the app with slash commands — no terminal needed:</p>
-  <div class="block"><pre><code>/plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin
-/plugin install leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
-  <p>Then open a new session and run <code>/mcp reconnect leeloo</code> → <strong>Leeloo</strong> → <strong>Authenticate</strong> → sign in → <strong>Allow access</strong>.</p>
+`claude mcp login` needs a terminal. When run through an agent's non-interactive
+shell it may report "stdin isn't a terminal" — the plugin ships a cross-platform
+helper that starts login on a console AND **opens the sign-in page in the user's
+default browser by itself**. Run it in the background and capture its output:
 
-  <footer>Leeloo.AI · <a href="https://leeloo.ai">leeloo.ai</a> · Plugin source: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin">GitHub</a></footer>
-</div>
+```bash
+LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-plugin-basics/login-leeloo.sh 2>/dev/null | sort | tail -1)"
+sh "$LOGIN" > /tmp/leeloo-helper.out 2>&1 &
+```
 
-<script>
-document.querySelectorAll('.block').forEach(function(b){
-  var btn=b.querySelector('.cp'), code=b.querySelector('code');
-  if(!btn||!code)return;
-  btn.addEventListener('click',function(){
-    navigator.clipboard.writeText(code.textContent.replace(/\s+$/,'')).then(function(){
-      btn.textContent='Copied';btn.classList.add('done');
-      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1600);
-    }).catch(function(){
-      var r=document.createRange();r.selectNodeContents(code);
-      var s=getSelection();s.removeAllRanges();s.addRange(r);
-    });
-  });
-});
-</script>
-</body>
-</html>
+The helper opens the browser automatically — do not print a URL or ask the user
+to copy/run anything. Poll `/tmp/leeloo-helper.out` and wait for the line
+`Authenticated with "plugin:leeloo:leeloo"` (that line, not `Connected` alone).
+Only the user can finish sign-in — they sign in at leeloo.ai and click
+**Allow access**; you cannot click it for them.
+
+If the output ends with `Authentication timeout` before the user finishes, run
+the helper again (a fresh listener); do not reuse an old URL.
+
+## 4. Verify
+
+```bash
+claude mcp get plugin:leeloo:leeloo
+```
+
+Expected: `Status: ✔ Connected`, URL `https://app.leeloo.ai/mcp`.
+
+## 5. Open a new session
+
+Claude Code loads a session's plugins and MCP tools at session start, so the
+Leeloo tools (`mcp__leeloo__*`) appear in the **next** session, not the one that
+ran the install. The connection persists — open a new session and start there.
+
+A good first message for that new session:
+
+> The Leeloo plugin is connected. Give me an overview of what you can do with
+> Leeloo — tunnels (funnels), lead-gen tools, offers, tags, custom fields,
+> analytics — then ask about my business so we can build a marketing foundation
+> and the first tunnel.
+
+## What Leeloo can do
+
+Build and edit tunnels (funnels), blocks, relations, buttons, tags, custom
+fields, lead-gen tools (LGT), offers, timers and filters; plus the bundled skills
+`marketing-foundation-builder` and `tunnel-creator`.
+
+## Update
+
+```bash
+claude plugin marketplace update leeloo-ai
+claude plugin update leeloo@leeloo-ai
+```
+
+Then start a new session and re-run the verify command.
+
+## No CLI (desktop app without the `claude` binary)
+
+Install from inside the app with slash commands — no terminal needed:
+
+```
+/plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin
+/plugin install leeloo@leeloo-ai
+```
+
+Then open a new session and run `/mcp reconnect leeloo` → **Leeloo** →
+**Authenticate** → sign in → **Allow access**. The `/plugin` and `/mcp` slash
+commands work without the `claude` CLI.
