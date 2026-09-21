@@ -66,9 +66,23 @@ LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-pl
 sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &
 ```
 
-The log prints an authorization URL to open, then the line
-`Authenticated with "plugin:leeloo:leeloo"` on success (that line, not
-`Connected` alone). Only the user can complete sign-in.
+When an authorization URL appears in the log, open it in the user's default
+browser automatically (do not ask the user to run a command) — use the right one
+for the OS:
+
+```bash
+# macOS
+open "<AUTH_URL>"
+# Linux
+xdg-open "<AUTH_URL>"
+# Windows
+powershell.exe -NoProfile -Command "Start-Process '<AUTH_URL>'"
+```
+
+Then wait for the line `Authenticated with "plugin:leeloo:leeloo"` in the log
+(that line, not `Connected` alone). Only the user can finish sign-in in the
+browser — they sign in at leeloo.ai and click **Allow access**; you cannot click
+it for them.
 
 ## 4. Verify
 
