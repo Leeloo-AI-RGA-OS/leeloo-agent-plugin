@@ -66,17 +66,11 @@ LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-pl
 sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &
 ```
 
-As soon as an authorization URL appears in the log, **open it yourself so the
-sign-in window appears automatically. Never print the URL and ask the user to
-copy or run anything** — opening it is your job, clicking Allow is theirs.
-
-Open it one of these ways (in order of preference):
-
-1. If an in-app Browser pane is available (desktop app: the `Claude_Browser`
-   tools, e.g. `navigate`/`preview_start`), open the URL there so the user signs
-   in right in the app. The localhost callback still completes because it is the
-   same machine.
-2. Otherwise open the OS default browser directly:
+As soon as an authorization URL appears in the log, **open it in the user's
+external default browser automatically. Never print the URL and ask the user to
+copy or run anything** — opening it is your job, clicking Allow is theirs. Use the
+OS default-browser command (do not use the in-app Browser pane — a hidden pane
+leaves the user seeing nothing):
 
 ```bash
 # macOS
@@ -86,6 +80,11 @@ xdg-open "<AUTH_URL>"
 # Windows
 powershell.exe -NoProfile -Command "Start-Process '<AUTH_URL>'"
 ```
+
+The localhost callback completes in whichever browser the user signs in with,
+since it is the same machine. If the login log ends with `Authentication timeout`
+before the user finishes, the listener is dead — start a fresh login helper and
+open the new URL; do not reuse the old one.
 
 Then wait for the line `Authenticated with "plugin:leeloo:leeloo"` in the log
 (that line, not `Connected` alone). Only the user can finish sign-in in the
