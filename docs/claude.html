@@ -8,102 +8,104 @@
 <meta name="description" content="Install and connect the Leeloo.AI plugin in Claude Code.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFFFFF; --ink:#14120F; --ink-2:#5B554C; --line:rgba(20,18,15,.12);
-  --code-bg:#17151A; --code-ink:#ECE7DE; --accent:#0062C7; --claude:#C25E3C; --ok:#0F7A52;
-  --f-body:"Manrope",system-ui,-apple-system,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --bg:#FFFFFF; --soft:#F4F7FF; --ink:#0A1024; --ink-2:#5A6472; --line:rgba(10,16,36,.10);
+  --blue:#277DE3; --blue-2:#67B4FF; --blue-ink:#1B5FB4; --ok:#12855A;
+  --code-bg:#0E1526; --code-ink:#E8EEF9;
+  --f:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --shadow:0 1px 2px rgba(10,16,36,.05),0 20px 44px -22px rgba(39,125,227,.28);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:var(--bg)}
-body{color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding:48px 20px 96px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:14px;letter-spacing:-.01em;color:var(--accent)}
-.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--claude)}
-h1{font-weight:800;font-size:clamp(26px,5vw,34px);letter-spacing:-.03em;margin:22px 0 6px}
-.lead{color:var(--ink-2);font-size:17px;margin-bottom:8px}
-.lead code{font-family:var(--f-mono);font-size:14px;background:rgba(20,18,15,.06);padding:1px 6px;border-radius:5px}
-hr{border:0;border-top:1px solid var(--line);margin:26px 0}
-h2{font-weight:700;font-size:20px;letter-spacing:-.02em;margin:32px 0 10px}
-p{margin:10px 0;color:var(--ink)}
+body{color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:44px 20px 100px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:30px}
+.mark{width:26px;height:26px;color:var(--blue);flex:none}
+.brand{font-weight:800;font-size:15px;letter-spacing:-.02em}
+.brand .x{color:var(--ink-2);font-weight:600;margin:0 6px}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);background:var(--soft);border:1px solid var(--line);padding:6px 12px;border-radius:100px;margin-bottom:16px}
+h1{font-weight:800;font-size:clamp(30px,6vw,46px);line-height:1.02;letter-spacing:-.045em;text-wrap:balance}
+h1 .g{color:var(--blue)}
+.lead{color:var(--ink-2);font-size:17px;margin-top:16px;max-width:60ch}
+.lead code,.step code,p code,li code{font-family:var(--mono);font-size:.86em;background:var(--soft);border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--blue-ink)}
+.cta{margin-top:28px;background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.cta .label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+h2{font-weight:800;font-size:21px;letter-spacing:-.03em;margin:34px 0 10px;display:flex;align-items:center;gap:10px}
+h2 .n{flex:none;width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;font-size:14px;font-weight:800;display:grid;place-items:center}
+p{margin:10px 0}
 p.muted{color:var(--ink-2);font-size:15px}
-ul{margin:10px 0 10px 22px}li{margin:5px 0}
 strong{font-weight:700}
-code{font-family:var(--f-mono)}
-:not(pre)>code{font-size:.9em;background:rgba(20,18,15,.06);padding:1px 6px;border-radius:5px}
 .block{position:relative;margin:14px 0}
-.block pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:16px 52px 16px 16px;overflow-x:auto;font-family:var(--f-mono);font-size:13.5px;line-height:1.7}
-.block .cp{position:absolute;top:10px;right:10px;border:0;background:rgba(255,255,255,.12);color:#fff;font-family:var(--f-body);font-weight:600;font-size:12px;padding:6px 10px;border-radius:8px;cursor:pointer;transition:background .15s}
-.block .cp:hover{background:rgba(255,255,255,.22)}
+.block pre{background:var(--code-bg);color:var(--code-ink);border-radius:14px;padding:16px 60px 16px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7}
+.block .cp{position:absolute;top:10px;right:10px;border:0;background:rgba(255,255,255,.14);color:#fff;font-family:var(--f);font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;transition:background .15s}
+.block .cp:hover{background:var(--blue)}
 .block .cp.done{background:var(--ok)}
-.callout{background:rgba(0,98,199,.06);border:1px solid rgba(0,98,199,.22);border-radius:12px;padding:14px 16px;margin:16px 0;font-size:15px}
-.callout b{color:var(--accent)}
-footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
-a{color:var(--accent)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--code-bg:#0C0B09}}
-:root[data-theme="dark"]{--bg:#14120F;--ink:#F3EEE6;--ink-2:#A79E90;--line:rgba(243,238,230,.14);--code-bg:#0C0B09}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-weight:700;font-size:14px;padding:11px 18px;border-radius:100px;text-decoration:none}
+footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
+a{color:var(--blue-ink)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1024;--soft:#121A31;--ink:#F4F7FF;--ink-2:#9AA6BE;--line:rgba(244,247,255,.14);--code-bg:#060B16;--blue-ink:#8FC1FF;
+}}
+:root[data-theme="dark"]{--bg:#0A1024;--soft:#121A31;--ink:#F4F7FF;--ink-2:#9AA6BE;--line:rgba(244,247,255,.14);--code-bg:#060B16;--blue-ink:#8FC1FF}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <span class="brand"><span class="dot"></span>Leeloo.AI × Claude Code</span>
+    <svg class="mark" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 4 L38 26 L60 32 L38 38 L32 60 L26 38 L4 32 L26 26 Z" fill="currentColor"/></svg>
+    <span class="brand">Leeloo.AI<span class="x">×</span>Claude Code</span>
   </div>
 
-  <h1>Claude Code install instructions — Leeloo</h1>
-  <p class="lead">Install the Leeloo plugin and connect its MCP server from Claude Code. Plugin source (public): <code>github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin</code>. Plugin <code>leeloo@leeloo-ai</code> · MCP <code>https://app.leeloo.ai/mcp</code>.</p>
+  <span class="eyebrow">AI Revenue OS</span>
+  <h1>Install <span class="g">Leeloo</span> in Claude Code</h1>
+  <p class="lead">Connect the Leeloo MCP server (<code>app.leeloo.ai/mcp</code>) and build funnels, lead-gen tools, offers and analytics — from chat. Plugin source: <code>github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin</code>.</p>
 
-  <div class="callout">Fastest path: paste this into any Claude Code session and let it follow the steps.
+  <div class="cta">
+    <div class="label">Fastest path — paste into any Claude Code session</div>
     <div class="block"><pre><code>/goal Read leeloo.ai/claude to install and use the Leeloo plugin</code></pre><button class="cp">Copy</button></div>
   </div>
 
   <hr>
 
-  <h2>Prerequisites</h2>
-  <p>The Claude Code CLI, version 2.1.210 or newer, and Git on PATH:</p>
+  <h2><span class="n">0</span>Prerequisites</h2>
+  <p>The Claude Code CLI (v2.1.210+) and Git on PATH:</p>
   <div class="block"><pre><code>claude --version
 git --version</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">No <code>claude</code> CLI? Jump to “No CLI” at the bottom.</p>
+  <p class="muted">No <code>claude</code> CLI? Jump to “No CLI” below.</p>
 
-  <h2>1. Already connected?</h2>
+  <h2><span class="n">1</span>Already connected?</h2>
   <p>Check first, to avoid a duplicate registration:</p>
   <div class="block"><pre><code>claude mcp get plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
   <p class="muted"><code>Status: ✔ Connected</code> → done. <code>Needs authentication</code> → step 3. Not found → step 2.</p>
 
-  <h2>2. Install</h2>
+  <h2><span class="n">2</span>Install</h2>
   <p>The marketplace clone can take a minute — allow a generous timeout:</p>
   <div class="block"><pre><code>claude plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git#main
 claude plugin marketplace list
 claude plugin install leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
 
-  <h2>3. Connect (sign in)</h2>
-  <div class="block"><pre><code>claude mcp login plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
-  <p>This opens the Leeloo sign-in in the browser and finishes on the localhost callback; sign in at leeloo.ai and click <strong>Allow access</strong>.</p>
-  <p class="muted">If <code>claude mcp login</code> reports “stdin isn’t a terminal” (agents through a shell tool), use the plugin’s cross-platform helper, which allocates a PTY in the background:</p>
+  <h2><span class="n">3</span>Connect (sign in)</h2>
+  <p>The plugin ships a helper that starts login and <strong>opens the sign-in page in your default browser automatically</strong>. Run it in the background:</p>
   <div class="block"><pre><code>LOGIN="$(ls -d "$HOME"/.claude/plugins/cache/leeloo-ai/leeloo/*/skills/leeloo-plugin-basics/login-leeloo.sh 2>/dev/null | sort | tail -1)"
-sh "$LOGIN" > /tmp/leeloo-login.log 2>&1 &</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">Poll <code>/tmp/leeloo-login.log</code>: open the authorization URL it prints, then wait for <code>Authenticated with "plugin:leeloo:leeloo"</code>.</p>
+sh "$LOGIN" > /tmp/leeloo-helper.out 2>&1 &</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">Sign in at leeloo.ai and click <strong>Allow access</strong>. Wait for <code>Authenticated with "plugin:leeloo:leeloo"</code>.</p>
 
-  <h2>4. Verify</h2>
+  <h2><span class="n">4</span>Verify</h2>
   <div class="block"><pre><code>claude mcp get plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
-  <p class="muted">Expected: <code>Status: ✔ Connected</code>, URL <code>https://app.leeloo.ai/mcp</code>.</p>
+  <p class="muted">Expected: <code>Status: ✔ Connected</code>, URL <code>https://app.leeloo.ai/mcp</code>. Then open a new session — the Leeloo tools (<code>mcp__leeloo__*</code>) load at session start.</p>
 
-  <h2>5. Open a new session</h2>
-  <p>Claude Code loads a session’s plugins and MCP tools at session start, so Leeloo’s tools (<code>mcp__leeloo__*</code>) appear in the <strong>next</strong> session. The connection persists — open a new session and start building.</p>
-
-  <h2>Update</h2>
-  <div class="block"><pre><code>claude plugin marketplace update leeloo-ai
-claude plugin update leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
-
-  <h2>No CLI (desktop app without the <code>claude</code> binary)</h2>
+  <h2><span class="n">✦</span>No CLI (desktop app)</h2>
   <p>Install from inside the app with slash commands — no terminal needed:</p>
   <div class="block"><pre><code>/plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin
 /plugin install leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
   <p>Then open a new session and run <code>/mcp reconnect leeloo</code> → <strong>Leeloo</strong> → <strong>Authenticate</strong> → sign in → <strong>Allow access</strong>.</p>
 
-  <footer>Leeloo.AI · <a href="https://leeloo.ai">leeloo.ai</a> · Plugin source: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin">GitHub</a></footer>
+  <p style="margin-top:30px"><a class="pill" href="https://leeloo.ai">Leeloo.ai ↗</a></p>
+  <footer>Leeloo.AI · <a href="https://leeloo.ai">leeloo.ai</a> · Plugin: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin">GitHub</a></footer>
 </div>
 
 <script>
@@ -113,11 +115,8 @@ document.querySelectorAll('.block').forEach(function(b){
   btn.addEventListener('click',function(){
     navigator.clipboard.writeText(code.textContent.replace(/\s+$/,'')).then(function(){
       btn.textContent='Copied';btn.classList.add('done');
-      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1600);
-    }).catch(function(){
-      var r=document.createRange();r.selectNodeContents(code);
-      var s=getSelection();s.removeAllRanges();s.addRange(r);
-    });
+      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1500);
+    }).catch(function(){var r=document.createRange();r.selectNodeContents(code);var s=getSelection();s.removeAllRanges();s.addRange(r);});
   });
 });
 </script>
