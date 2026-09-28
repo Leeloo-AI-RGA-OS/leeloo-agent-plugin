@@ -102,6 +102,27 @@ current session, tell the user in one line to open a new session — nothing mor
 
 ## Update
 
+### Turn on auto-update (once)
+
+The `leeloo-ai` marketplace is third-party, so Claude Code keeps auto-update
+**off** for it by default. Ask the user to turn it on once — after that every new
+version of the plugin installs by itself in the background at session start:
+
+```
+/plugin  →  Marketplaces  →  leeloo-ai  →  Enable auto-update
+```
+
+Tell the user in one line that this is a one-time click and that new versions
+then arrive automatically: a `Plugin updated: leeloo` notice appears, the next
+session loads the new version (or `/reload-plugins` applies it now). This toggle
+lives only in the `/plugin` screen — there is no CLI flag for it.
+
+If the user's organization disables Claude Code's main auto-updater, plugin
+auto-update is disabled with it; `FORCE_AUTOUPDATE_PLUGINS=1` in the environment
+re-enables plugin updates alone.
+
+### Update manually
+
 ```bash
 claude plugin marketplace update leeloo-ai
 claude plugin update leeloo@leeloo-ai

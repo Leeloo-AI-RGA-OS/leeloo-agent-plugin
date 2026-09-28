@@ -98,6 +98,13 @@ sh "$LOGIN" > /tmp/leeloo-helper.out 2>&1 &</code></pre><button class="cp">Copy<
   <div class="block"><pre><code>claude mcp get plugin:leeloo:leeloo</code></pre><button class="cp">Copy</button></div>
   <p class="muted">Expected: <code>Status: ✔ Connected</code>, URL <code>https://app.leeloo.ai/mcp</code>. Then open a new session — the Leeloo tools (<code>mcp__leeloo__*</code>) load at session start.</p>
 
+  <h2><span class="n">5</span>Update</h2>
+  <p>The <code>leeloo-ai</code> marketplace is third-party, so Claude Code keeps auto-update <strong>off</strong> for it by default. Turn it on <strong>once</strong> — after that every new version installs by itself in the background at session start:</p>
+  <div class="block"><pre><code>/plugin  →  Marketplaces  →  leeloo-ai  →  Enable auto-update</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">You will see <code>Plugin updated: leeloo</code>; the next session loads the new version, or run <code>/reload-plugins</code> to apply it now. To update manually instead:</p>
+  <div class="block"><pre><code>claude plugin marketplace update leeloo-ai
+claude plugin update leeloo@leeloo-ai</code></pre><button class="cp">Copy</button></div>
+
   <h2><span class="n">✦</span>No CLI (desktop app)</h2>
   <p>Install from inside the app with slash commands — no terminal needed:</p>
   <div class="block"><pre><code>/plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin
