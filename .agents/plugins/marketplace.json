@@ -1,0 +1,20 @@
+{
+  "name": "leeloo-ai",
+  "interface": {
+    "displayName": "Leeloo.AI"
+  },
+  "plugins": [
+    {
+      "name": "leeloo",
+      "source": {
+        "source": "local",
+        "path": "./codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

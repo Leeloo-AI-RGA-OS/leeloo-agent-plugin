@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index,follow">
+<title>ChatGPT install instructions — Leeloo</title>
+<meta name="description" content="Install and connect the Leeloo.AI plugin in ChatGPT / Codex desktop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --soft:#F4F7FF; --ink:#0A1024; --ink-2:#5A6472; --line:rgba(10,16,36,.10);
+  --blue:#277DE3; --blue-2:#67B4FF; --blue-ink:#1B5FB4; --ok:#12855A;
+  --code-bg:#0E1526; --code-ink:#E8EEF9;
+  --f:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --shadow:0 1px 2px rgba(10,16,36,.05),0 20px 44px -22px rgba(39,125,227,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:44px 20px 100px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:30px}
+.mark{width:26px;height:26px;color:var(--blue);flex:none}
+.brand{font-weight:800;font-size:15px;letter-spacing:-.02em}
+.brand .x{color:var(--ink-2);font-weight:600;margin:0 6px}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);background:var(--soft);border:1px solid var(--line);padding:6px 12px;border-radius:100px;margin-bottom:16px}
+h1{font-weight:800;font-size:clamp(30px,6vw,46px);line-height:1.02;letter-spacing:-.045em;text-wrap:balance}
+h1 .g{color:var(--blue)}
+.lead{color:var(--ink-2);font-size:17px;margin-top:16px;max-width:60ch}
+.lead code,.step code,p code,li code{font-family:var(--mono);font-size:.86em;background:var(--soft);border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--blue-ink)}
+.cta{margin-top:28px;background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.cta .label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+h2{font-weight:800;font-size:21px;letter-spacing:-.03em;margin:34px 0 10px;display:flex;align-items:center;gap:10px}
+h2 .n{flex:none;width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;font-size:14px;font-weight:800;display:grid;place-items:center}
+p{margin:10px 0}
+p.muted{color:var(--ink-2);font-size:15px}
+strong{font-weight:700}
+.block{position:relative;margin:14px 0}
+.block pre{background:var(--code-bg);color:var(--code-ink);border-radius:14px;padding:16px 60px 16px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.7}
+.block .cp{position:absolute;top:10px;right:10px;border:0;background:rgba(255,255,255,.14);color:#fff;font-family:var(--f);font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;transition:background .15s}
+.block .cp:hover{background:var(--blue)}
+.block .cp.done{background:var(--ok)}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-weight:700;font-size:14px;padding:11px 18px;border-radius:100px;text-decoration:none}
+footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
+a{color:var(--blue-ink)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1024;--soft:#121A31;--ink:#F4F7FF;--ink-2:#9AA6BE;--line:rgba(244,247,255,.14);--code-bg:#060B16;--blue-ink:#8FC1FF;
+}}
+:root[data-theme="dark"]{--bg:#0A1024;--soft:#121A31;--ink:#F4F7FF;--ink-2:#9AA6BE;--line:rgba(244,247,255,.14);--code-bg:#060B16;--blue-ink:#8FC1FF}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <svg class="mark" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M32 4 L38 26 L60 32 L38 38 L32 60 L26 38 L4 32 L26 26 Z" fill="currentColor"/></svg>
+    <span class="brand">Leeloo.AI<span class="x">×</span>ChatGPT / Codex</span>
+  </div>
+
+  <span class="eyebrow">AI Revenue OS</span>
+  <h1>Install <span class="g">Leeloo</span> in ChatGPT</h1>
+  <p class="lead">Connect the Leeloo MCP server (<code>app.leeloo.ai/mcp</code>) to the ChatGPT / Codex desktop app and build marketing foundations, funnels, lead-gen tools and CRM — from chat. Plugin source: <code>github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin</code>.</p>
+
+  <div class="cta">
+    <div class="label">Fastest path — paste into a new conversation in the Codex desktop app</div>
+  <div class="block"><pre><code>Read leeloo.ai/chatgpt to install the Leeloo plugin and start building my marketing.</code></pre><button class="cp">Copy</button></div>
+  </div>
+
+  <hr>
+
+  <h2><span class="n">0</span>Host environment gate</h2>
+  <p>This must run in the <strong>Codex desktop app</strong> on the user's machine. The web app or an isolated remote workspace cannot modify the desktop plugin directory: stop there and send the user to the desktop app with the prompt above. All commands use the Codex CLI <strong>bundled with the desktop app</strong> — locate it first and replace <code>"&lt;BUNDLED_CODEX&gt;"</code> with its full path (keep the quotes).</p>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" --version
+git --version</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">On Windows the Codex runtime may bundle Git at <code>%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe</code> — prepend that directory to PATH if <code>git</code> is not found.</p>
+
+  <h2><span class="n">1</span>Already connected?</h2>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" mcp get leeloo --json</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">Registered and authenticated → skip to step 5. Needs authentication → step 3. Not found → step 2.</p>
+
+  <h2><span class="n">2</span>Install</h2>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" plugin marketplace add https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git --ref main
+"&lt;BUNDLED_CODEX&gt;" plugin marketplace list
+"&lt;BUNDLED_CODEX&gt;" plugin list --marketplace &lt;MARKETPLACE&gt;
+"&lt;BUNDLED_CODEX&gt;" plugin add leeloo@&lt;MARKETPLACE&gt;</code></pre><button class="cp">Copy</button></div>
+  <p class="muted"><code>&lt;MARKETPLACE&gt;</code> is the name Codex assigned in <code>plugin marketplace list</code> (normally <code>leeloo-ai</code>). Do not open a new thread yet.</p>
+
+  <h2><span class="n">3</span>Connect (sign in)</h2>
+  <p>Opens the Leeloo sign-in page in the browser. Sign in at leeloo.ai and click <strong>Allow access</strong>. If it times out, rerun the same command — one attempt at a time.</p>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" mcp login leeloo</code></pre><button class="cp">Copy</button></div>
+
+  <h2><span class="n">4</span>Verify</h2>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" plugin list --marketplace &lt;MARKETPLACE&gt; --json
+"&lt;BUNDLED_CODEX&gt;" mcp get leeloo --json</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">Expected: the Leeloo row <code>installed, enabled</code>; the MCP entry with URL <code>https://app.leeloo.ai/mcp</code> and an authenticated state.</p>
+
+  <h2><span class="n">5</span>Required final step: open the next conversation</h2>
+  <p>The installation conversation cannot reach the newly installed tools. Create the user's next conversation yourself (Codex conversation tools: <code>create_thread</code>, <code>send_message_to_thread</code>, <code>navigate_to_codex_page</code>) with this first message, translated to the user's language:</p>
+  <div class="block"><pre><code>The Leeloo plugin is installed. Load the leeloo-plugin-basics-codex skill, then ask me for my business materials (briefing transcript, sales brief, price list, cases, site and social links) and build the marketing foundation with the marketing-foundation-builder skill. After I approve it, assemble the tunnel in Leeloo with the tunnel-creator skill.</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">If setup did not fully succeed, open a <em>recovery</em> conversation instead that reads this page and retries from the failed step — and do not tell the user Leeloo is installed. Full agent contract: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin/blob/main/docs/codex-install.md">docs/codex-install.md</a>.</p>
+
+  <h2><span class="n">6</span>Update</h2>
+  <div class="block"><pre><code>"&lt;BUNDLED_CODEX&gt;" plugin marketplace upgrade &lt;MARKETPLACE&gt;</code></pre><button class="cp">Copy</button></div>
+  <p class="muted">Then start a new conversation and rerun the verification commands.</p>
+
+  <p style="margin-top:30px"><a class="pill" href="https://leeloo.ai/claude">Using Claude Code instead? ↗</a></p>
+  <footer>Leeloo.AI · <a href="https://leeloo.ai">leeloo.ai</a> · Plugin: <a href="https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin">GitHub</a></footer>
+</div>
+
+<script>
+document.querySelectorAll('.block').forEach(function(b){
+  var btn=b.querySelector('.cp'), code=b.querySelector('code');
+  if(!btn||!code)return;
+  btn.addEventListener('click',function(){
+    navigator.clipboard.writeText(code.textContent.replace(/\s+$/,'')).then(function(){
+      btn.textContent='Copied';btn.classList.add('done');
+      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1500);
+    }).catch(function(){var r=document.createRange();r.selectNodeContents(code);var s=getSelection();s.removeAllRanges();s.addRange(r);});
+  });
+});
+</script>
+</body>
+</html>

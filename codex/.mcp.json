@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "leeloo": {
+      "url": "https://app.leeloo.ai/mcp",
+      "oauth_resource": "https://app.leeloo.ai/mcp",
+      "http_headers": {
+        "x-leeloo-mcp-client": "codex"
+      }
+    }
+  }
+}

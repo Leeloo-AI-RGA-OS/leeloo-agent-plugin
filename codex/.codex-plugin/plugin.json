@@ -1,0 +1,46 @@
+{
+  "name": "leeloo",
+  "version": "1.0.9",
+  "description": "Leeloo.AI Codex plugin: build a marketing foundation, assemble sales funnels (tunnels), lead-gen landings, offers and CRM in Leeloo.AI from Codex.",
+  "author": {
+    "name": "Leeloo.AI",
+    "url": "https://leeloo.ai"
+  },
+  "homepage": "https://leeloo.ai",
+  "repository": "https://github.com/Leeloo-AI-RGA-OS/leeloo-agent-plugin.git",
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "leeloo",
+    "funnel",
+    "tunnel",
+    "crm",
+    "chatbot",
+    "lead-generation",
+    "codex",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Leeloo.AI",
+    "shortDescription": "Build sales funnels in Leeloo.AI from Codex",
+    "longDescription": "Workflow skills and MCP server configuration for Leeloo.AI: build a marketing foundation from a business brief, assemble a sales tunnel (messages, buttons, delays, filters, tags, CRM deals), create lead-gen landings (LGT), connect messengers, and validate the result in the Leeloo.AI cabinet.",
+    "developerName": "Leeloo.AI",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://leeloo.ai",
+    "privacyPolicyURL": "https://leeloo.ai/ru/privacy-policy/",
+    "termsOfServiceURL": "https://leeloo.ai/ru/terms-of-use/",
+    "defaultPrompt": [
+      "Build a marketing foundation for my business from this brief.",
+      "Assemble a sales tunnel in Leeloo from the marketing foundation.",
+      "Create a lead-gen landing (LGT) for my offer."
+    ],
+    "brandColor": "#277DE3",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}

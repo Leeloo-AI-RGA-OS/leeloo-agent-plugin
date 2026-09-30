@@ -67,3 +67,24 @@ install flow changes (marketplace URL, plugin name, connect steps), update both.
   `claude.md`.
 - The `robots` meta on the landing is `index,follow`; set to `noindex` if you do
   not want the page in search results.
+
+## leeloo.ai/chatgpt — the same for Codex (ChatGPT desktop)
+
+Same mechanism, second URL. A user pastes one prompt into a new conversation in
+the Codex desktop app and the Leeloo plugin installs and connects
+(`codex plugin marketplace add … --ref main` → `codex plugin add leeloo@…` →
+`codex mcp login leeloo`).
+
+| File | Serve at | For |
+|------|----------|-----|
+| `codex-install.md` → copy as `chatgpt.md` | `leeloo.ai/chatgpt` (default variant) | the Codex agent — install/connect steps it executes |
+| `chatgpt.html` | `leeloo.ai/chatgpt` (browser variant) | a person who opens the link |
+| `nginx-chatgpt.conf` | nginx include (inside the same server block) | content negotiation; reuses the maps from `nginx-claude.conf` |
+
+Deploy: copy the two files to the web root, include `nginx-chatgpt.conf` next to
+the `/claude` locations, `nginx -t && systemctl reload nginx`. Verify with the
+two `curl` lines at the bottom of `nginx-chatgpt.conf`, then run the prompt end
+to end in a Codex desktop app.
+
+The Codex package itself lives in `codex/` with its marketplace manifest in
+`.agents/plugins/marketplace.json`; the shared MCP server and OAuth are unchanged.
